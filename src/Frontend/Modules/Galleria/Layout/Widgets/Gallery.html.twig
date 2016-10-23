@@ -1,0 +1,11 @@
+
+{% if widgetGallery %}
+    <ul class="list-unstyled row galleria-gallery">
+    {% for gallery in widgetGallery %}
+        <li class="col-xs-3">
+            <a href="{{ gallery.image_800x }}" title="{{ gallery.description }}" class="colorbox"><img src="{{ gallery.image_128x128 }}" alt="{{ gallery.description }} {{ gallery.filename }}" title="{{ gallery.description }} {{ gallery.filename }}" class="img-responsive"></a>
+            <span>{{ gallery.description }}</span>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}

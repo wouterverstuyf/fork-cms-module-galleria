@@ -5,6 +5,7 @@ namespace Backend\Modules\Galleria\Actions;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Galleria\Engine\Model as BackendGalleriaModel;
 /*
@@ -45,8 +46,14 @@ class AddCategory extends BackendBaseActionAdd
 
 		// create form
 		$this->frm = new BackendForm('add_category');
-		$this->frm->addText('title', null, 255, 'inputText title', 'inputTextError title');
+		$this->frm->addText('title', null, 255, 'form-control title', 'form-control danger title');
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
+
+	    // meta object
+	    $this->meta = new BackendMeta($this->frm, null, 'title', true);
+
+        // set callback for generating a unique URL
+        $this->meta->setURLCallback('Backend\Modules\Galleria\Engine\Model', 'getURLForCategory');
 	}
 
 	/**
@@ -62,6 +69,9 @@ class AddCategory extends BackendBaseActionAdd
 			// validate fields
 			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
 
+            // validate meta
+            $this->meta->validate();
+
 			// no errors?
 			if($this->frm->isCorrect())
 			{
@@ -69,6 +79,7 @@ class AddCategory extends BackendBaseActionAdd
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
 				$item['publish_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
+				$item['meta_id'] = $this->meta->save();
 				$item['hidden'] = $this->frm->getField('hidden')->getValue();
 
 				// get the highest sequence available

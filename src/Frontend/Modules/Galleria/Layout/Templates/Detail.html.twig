@@ -1,0 +1,22 @@
+{% if item %}
+    <div id="galleriaIndex">
+        <article class="mod">
+            <h3>{{ item.title }}</h3>
+            {{ item.description|raw }}
+        </article>
+    </div>
+    {% if item.images %}
+    <ul class="list-unstyled row galleria-gallery">
+        {% for image in item.images %}
+            <li class="col-xs-6 col-sm-4 col-md-3">
+                <a href="{{ image.image_800x }}" title="{{ image.description }}" class="colorbox">
+                  <img src="{{ image.image_800x }}" alt="{{ image.description }} {{ image.filename }}" title="{{ image.description }} {{ image.filename }}" class="img-responsive">
+                </a>
+                <span>{{ image.description }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="clear">&nbsp;</div>
+    {% endif %}
+{% endif %}
+

@@ -1,18 +1,18 @@
 <?php
 namespace Backend\Modules\Galleria\Actions;
 
-
-use Backend\Core\Engine\Base\Action as BackendBaseAction;
-use Backend\Core\Engine\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Galleria\Engine\Model as BackendGalleriaModel;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 /*
  * This file is part of Fork CMS.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Modules\Galleria\Engine\Model as BackendGalleriaModel;
 
 /**
  * This is the Categories action

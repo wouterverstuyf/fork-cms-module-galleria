@@ -1,0 +1,28 @@
+{% if items %}
+<ul class="list-unstyled">
+  {% for item in items %}
+  <li>
+    <h3><a href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a></h3>
+
+    <div class="row">
+      <div class="col-sm-2">
+        {% if item.image %}
+        <a href="{{ item.full_url }}" title="{{ item.title }}">
+          <img src="{{ item.image.image_800x }}" alt="{{ item.title }}" title="{{ item.title }}" />
+        </a>
+        {% endif %}
+
+      </div>
+      <!-- /.col-sm-2 -->
+      <div class="col-sm-9">
+        {{ item.description|raw }}
+        <a href="{{ items.full_url }}" title="{{ items.title }}">
+          {{ 'lbl.ViewMorePhotos'|trans|ucfirst }}
+        </a>
+      </div>
+      <!-- /.col-sm-9 -->
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}

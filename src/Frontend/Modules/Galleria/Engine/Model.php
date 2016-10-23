@@ -47,6 +47,7 @@ class Model
 				if(isset($row['meta_data'])) $row['meta_data'] = @unserialize($row['meta_data']);
 
 				$image = self::getImagesForAlbum($row['id'], 1);
+
 				if(!empty($image))
 				{
 					foreach($image as $rowImage)

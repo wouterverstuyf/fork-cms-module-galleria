@@ -19,10 +19,14 @@
 			<name><![CDATA[John Poelman]]></name>
 			<url><![CDATA[http://www.bloobz.be]]></url>
 		</author>
-        <author>
-            <name><![CDATA[Waldo Cosman (waldo@comsa.be)]]></name>
-            <url><![CDATA[http://www.comsa.be]]></url>
-        </author>
+    <author>
+      <name><![CDATA[Waldo Cosman (waldo@comsa.be)]]></name>
+      <url><![CDATA[http://www.comsa.be]]></url>
+    </author>
+    <author>
+      <name><![CDATA[Wouter Verstuyf (wouter@webflow.be)]]></name>
+      <url><![CDATA[http://www.webflow.be]]></url>
+    </author>
 	</authors>
 	<events>
 		<event application="backend" name="after_saved_settings"><![CDATA[Triggered when the settings are saved.]]></event>

@@ -1,0 +1,62 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block actionbar %}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }}</label>
+        {{ album.title }}
+      </div>
+    </div>
+  </div>
+
+  {% form add_image %}
+  <div class="row fork-module-content">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <p>{{ 'lbl.UploadImages'|trans|ucfirst }}</p>
+      </div>
+      <div class="panel-body">
+        <div class="form-group last">
+          {% form_field images %} {% form_field_error images %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endform %}
+
+  {% if images %}
+    {% form delete_image %}
+  <div class="row fork-module-content">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <p>{{ 'lbl.Images'|trans|ucfirst }}</p>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <ul class="galleria">
+            {% for image in images %}
+            <li id="image-{{ image.id }}">
+              <img src="{{ image.image_128x128 }}" alt="{{ image.filename }}" title="{{ image.filename }}"/>
+              {{ image.field_description|raw }}
+              {{ image.field_delete|raw }}<label for="delete{{ image.id }}">{{ 'lbl.Delete'|trans|ucfirst }}</label>
+            </li>
+            {% endfor %}
+          </ul>
+          <p id="select-all-images"><input type="checkbox" id="all-images" name="all-images"/> <label for="all-images">{{ 'lbl.SelectAllImages'|trans|ucfirst }}</label></p>
+        </div>
+        <button type="submit" class="btn btn-primary" id="deleteButton">
+          <span class="fa fa-plus-square"></span>
+          {{ 'lbl.Save'|trans|ucfirst }}
+        </button>
+      </div>
+    </div>
+  </div>
+    {% endform %}
+  {% endif %}
+{% endblock %}

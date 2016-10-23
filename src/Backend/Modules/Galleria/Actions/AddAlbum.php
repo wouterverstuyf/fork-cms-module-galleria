@@ -34,10 +34,10 @@ class AddAlbum extends BackendBaseActionAdd
 	{
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-		
+
 		// get the data
 		$this->getData();
-		
+
 		// load the form
 		$this->loadForm();
 
@@ -85,25 +85,25 @@ class AddAlbum extends BackendBaseActionAdd
 		$this->frm->addText('title');
 		$this->frm->getField('title')->setAttribute('class', 'title ' . $this->frm->getField('title')->getAttribute('class'));
 		$this->frm->addEditor('description');
-		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
+		$this->frm->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
 		$this->frm->addRadiobutton('show_in_overview', $rbtShowOverviewValues, 'Y');
 		$this->frm->addDropdown('category', BackendGalleriaModel::getCategoriesForDropdown(),$this->id);
-		
+
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
 	}
-	
+
 	/**
 	 * Get the data for an album
 	 *
 	 * @return void
 	 */
 	private function getData()
-	{	
+	{
 		// check for a category's id
 		$this->id = $this->getParameter('id', 'int');
-		
+
 		// get categories
 		$this->categories = BackendGalleriaModel::getCategoriesForDropdown();
 
@@ -111,8 +111,8 @@ class AddAlbum extends BackendBaseActionAdd
 		{
 			$this->redirect(BackendModel::createURLForAction('add_category'));
 		}*/
-	}	
-	
+	}
+
 	/**
 	 * Validate the form
 	 *
@@ -142,16 +142,16 @@ class AddAlbum extends BackendBaseActionAdd
 				$album['category_id'] = (int) $this->frm->getField('category')->getValue();
 				$album['publish_on'] = BackendModel::getUTCDate();
 				$album['description'] = (string) $this->frm->getField('description')->getValue();
-				
+
 				// first, insert the album
 				$album['id'] = BackendGalleriaModel::insertAlbum($album);
-				
+
 				// save the tags
 				BackendTagsModel::saveTags($album['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
-				
+
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_add_album', array('item' => $album));
-				
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('albums') . '&report=added-album&var=' . urlencode($album['title']) . '&highlight=row-' . $album['id']);
 			}

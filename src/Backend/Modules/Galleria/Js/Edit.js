@@ -92,7 +92,7 @@ jsBackend.galleria =
             {
                 var randomNumber = Math.floor(Math.random() * 11)
 
-                window.location.replace("/private/" + jsBackend.current.language + "/galleria/edit_album?token=true&id=" + jsData.Galleria.id + "&report=added-images&random=" + randomNumber + "#tabImages");
+                window.location.replace("/private/" + jsBackend.current.language + "/galleria/edit_images?token=true&id=" + jsData.Galleria.id + "&report=added-images&random=" + randomNumber);
             }
         });
     }

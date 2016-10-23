@@ -10,6 +10,10 @@
 				<translation language="nl"><![CDATA[het album is verwijderd]]></translation>
 				<translation language="en"><![CDATA[the album is deleted]]></translation>
 			</item>
+      <item type="message" name="AddedAlbum">
+        <translation language="nl"><![CDATA[het album is toegevoegd]]></translation>
+        <translation language="en"><![CDATA[the album is added]]></translation>
+      </item>
 			<item type="message" name="EditedAlbum">
 				<translation language="nl"><![CDATA[het album is aangepast]]></translation>
 				<translation language="en"><![CDATA[the album is edited]]></translation>
@@ -86,6 +90,10 @@
 				<translation language="nl"><![CDATA[album bewerken]]></translation>
 				<translation language="en"><![CDATA[edit album]]></translation>
 			</item>
+      <item type="label" name="SelectAllImages">
+        <translation language="nl"><![CDATA[selecteer alle afbeeldingen]]></translation>
+        <translation language="en"><![CDATA[select all images]]></translation>
+      </item>
             <item type="label" name="AddImage">
                 <translation language="nl"><![CDATA[foto toevoegen]]></translation>
                 <translation language="en"><![CDATA[add image]]></translation>
@@ -174,10 +182,14 @@
 	</Backend>
 	<Frontend>
 		<Core>
-            <item type="action" name="Group">
-                <translation language="nl"><![CDATA[groep]]></translation>
-                <translation language="en"><![CDATA[group]]></translation>
-            </item>
+      <item type="action" name="Group">
+          <translation language="nl"><![CDATA[groep]]></translation>
+          <translation language="en"><![CDATA[group]]></translation>
+      </item>
+      <item type="label" name="ViewMorePhotos">
+          <translation language="nl"><![CDATA[bekijk meer foto's]]></translation>
+          <translation language="en"><![CDATA[view more photos]]></translation>
+      </item>
 		</Core>
 	</Frontend>
 </locale>

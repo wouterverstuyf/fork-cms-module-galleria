@@ -1,0 +1,9 @@
+{% if widgetSlideshow %}
+<ul class="gallery list-unstyled" data-cycle-fx="fade" data-cycle-slides="li" data-cycle-timeout="5000">
+    {% for slideshow in widgetSlideshow %}
+        <li>
+            <img src="{{ slideshow.image_800x }}" alt="{{ slideshow.filename }}" title="{{ slideshow.filename }}">
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}

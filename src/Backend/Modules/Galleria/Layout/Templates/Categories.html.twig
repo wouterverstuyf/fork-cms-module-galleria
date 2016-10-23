@@ -1,0 +1,31 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block actionbar %}
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group" role="group">
+      {% if showGalleriaAddCategory %}
+        {{ macro.buttonIcon( geturl('add_category'), 'plus-square', 'lbl.AddCategory'|trans|ucfirst) }}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      {% if dataGrid %}
+        <div class="content-block content-block-pb">
+          <div class="content-title">
+            <h3 class="panel-title">{{ 'lbl.Categories'|trans|ucfirst }}</h3>
+          </div>
+          <div class="table-responsive">
+            {{ dataGrid|raw }}
+          </div>
+        </div>
+      {% endif %}
+      {% if not dataGrid %}
+        <p>{{ 'msg.NoItems'|trans|ucfirst }}</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

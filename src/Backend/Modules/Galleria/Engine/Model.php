@@ -30,7 +30,8 @@ class Model
 
 	const QRY_DATAGRID_ALBUMS = 'SELECT i.*
 		  FROM galleria_albums AS i
-		  WHERE i.language = ? ORDER BY i.sequence ASC';
+		  WHERE i.language = ?
+		  ORDER BY i.sequence ASC';
 
 	/**
 	 * Is the deletion of this album allowed?
@@ -298,6 +299,58 @@ class Model
 		return $records;
 	}
 
+    /**
+     * Retrieve the unique URL for a category
+     *
+     * @param string $url
+     * @param int[optional] $id The id of the category to ignore.
+     * @return string
+     */
+    public static function getURLForCategory($URL, $id = null)
+    {
+        // redefine URL
+        $URL = (string) $URL;
+
+        // get db
+        $db = BackendModel::getContainer()->get('database');
+
+        // new category
+        if ($id === null) {
+            // already exists
+            if ((bool) $db->getVar(
+                'SELECT 1
+                 FROM galleria_categories AS i
+                 INNER JOIN meta AS m ON i.meta_id = m.id
+                 WHERE i.language = ? AND m.url = ?
+                 LIMIT 1',
+                array(BL::getWorkingLanguage(), $URL)
+            )
+            ) {
+                $URL = BackendModel::addNumber($URL);
+
+                return self::getURLForCategory($URL);
+            }
+        } else {
+            // current category should be excluded
+            if ((bool) $db->getVar(
+                'SELECT 1
+                 FROM galleria_categories AS i
+                 INNER JOIN meta AS m ON i.meta_id = m.id
+                 WHERE i.language = ? AND m.url = ? AND i.id != ?
+                 LIMIT 1',
+                array(BL::getWorkingLanguage(), $URL, $id)
+            )
+            ) {
+                $URL = BackendModel::addNumber($URL);
+
+                return self::getURLForCategory($URL, $id);
+            }
+        }
+
+        return $URL;
+
+    }
+
 	/**
 	 * Insert an album in the database
 	 *
@@ -373,7 +426,7 @@ class Model
 
 		if(is_null($widget['sequence']))
 		{
-			$widget['sequence'] = $db->getVar('SELECT CEILING(MAX(i.sequence) 
+			$widget['sequence'] = $db->getVar('SELECT CEILING(MAX(i.sequence)
 			/ 1000) * 1000 FROM modules_extras AS i');
 		}
 
@@ -403,6 +456,21 @@ class Model
 
 		// return the id
 		return $update;
+	}
+
+	/**
+	 * Update the album sequence
+	 *
+	 * @param array $item
+	 *
+	 * @return bool
+	 */
+	public static function updateAlbumSequence(array $item)
+	{
+		$db = BackendModel::getContainer()->get('database');
+
+		// update the category
+		$db->update('galleria_albums', $item, 'id = ?', array($item['id']));
 	}
 
 	public static function updateImage(array $item)

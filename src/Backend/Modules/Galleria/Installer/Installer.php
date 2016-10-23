@@ -26,7 +26,7 @@ class Installer extends ModuleInstaller
 
 		// install the locale, this is set here beceause we need the module for this
 		$this->importLocale(dirname(__FILE__) . '/Data/Locale.xml');
-		
+
 		// modulerights
 		$this->setModuleRights(1, 'galleria');
 
@@ -34,6 +34,7 @@ class Installer extends ModuleInstaller
 		$this->setActionRights(1, 'Galleria', 'albums');
 		$this->setActionRights(1, 'Galleria', 'add_album');
 		$this->setActionRights(1, 'Galleria', 'edit_album');
+		$this->setActionRights(1, 'Galleria', 'edit_images');
 		$this->setActionRights(1, 'Galleria', 'delete_album');
 		$this->setActionRights(1, 'Galleria', 'categories');
 		$this->setActionRights(1, 'Galleria', 'add_category');
@@ -45,34 +46,33 @@ class Installer extends ModuleInstaller
 		$this->setActionRights(1, 'Galleria', 'settings');
 
 		// add extra's
-		$this->insertExtra('Galleria', 'widget', 'Slideshow', 'slideshow');
-		$this->insertExtra('Galleria', 'widget', 'Gallery', 'gallery');
 		$GalleriaID = $this->insertExtra('Galleria', 'block', 'Galleria', null, null, 'N', 1000);
-				
+
 		// module navigation
 		$navigationModulesId = $this->setNavigation(null, 'Modules');
 		$navigationGalleriaId = $this->setNavigation($navigationModulesId, 'Galleria', 'galleria/albums');
-		
+
 		$this->setNavigation($navigationGalleriaId, 'Albums', 'galleria/albums', array(
 				'galleria/add_album',
 				'galleria/edit_album',
+				'galleria/edit_images',
 				'galleria/delete_album',
 				'galleria/add',
 				'galleria/edit',
 				'galleria/delete'
 		));
-		
+
 		$this->setNavigation($navigationGalleriaId, 'Categories', 'galleria/categories', array(
 				'galleria/add_category',
 				'galleria/edit_category',
 				'galleria/delete_category'
 		));
-		
+
 		// settings navigation
 		$navigationSettingsId = $this->setNavigation(null, 'Settings');
 		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
 		$this->setNavigation($navigationModulesId, 'Galleria', 'galleria/settings');
-		
+
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{

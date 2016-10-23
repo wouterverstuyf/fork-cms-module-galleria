@@ -4,6 +4,7 @@ namespace Backend\Modules\Galleria\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Galleria\Engine\Model as BackendGalleriaModel;
@@ -85,6 +86,13 @@ class EditCategory extends BackendBaseActionEdit
 		// create elements
 		$this->frm->addText('title', $this->record['title']);
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
+
+        // meta object
+        $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+
+        // set callback for generating a unique URL
+        $this->meta->setURLCallback('Backend\Modules\Galleria\Engine\Model', 'getURLForCategory', array($this->record['id']));
+
 	}
 
 	/**
@@ -120,6 +128,9 @@ class EditCategory extends BackendBaseActionEdit
 			// validate fields
 			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
 
+            // validate meta
+            $this->meta->validate();
+
 			// no errors?
 			if($this->frm->isCorrect())
 			{
@@ -128,16 +139,17 @@ class EditCategory extends BackendBaseActionEdit
 				$category['title'] = (string) $this->frm->getField('title')->getValue();
 				$category['language'] = (string) BL::getWorkingLanguage();
 				$category['hidden'] = (string) $this->frm->getField('hidden')->getValue();
+				$category['meta_id'] = $this->meta->save(true);
 
 				// ... then, update the category
 				$category_update = BackendGalleriaModel::updateCategory($category);
-				
+
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_edit_category', array('item' => $category));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($category['title']) . '&highlight=row-' . $category['id']);			
-			}	
+				$this->redirect(BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($category['title']) . '&highlight=row-' . $category['id']);
+			}
 		}
 	}
 }
